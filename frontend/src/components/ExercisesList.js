@@ -3,6 +3,9 @@ import Table from 'react-bootstrap/Table';
 import Exercise from './Exercise';
 
 class ExercisesList extends Component {
+
+  // TODO: Fix Warning "Can't perform a React state update on an unmounted component"
+
   constructor(props) {
     super(props);
     this.minTableWidth = 550;

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 export default class UserForm extends Component {
+
+  // TODO: Fix Warning "Can't perform a React state update on an unmounted component"
+
   constructor(props) {
     super(props);
     this.state = { username: '', redirect: false };
