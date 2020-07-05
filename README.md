@@ -3,7 +3,7 @@
 Simple MERN Web App, original code & author: <br />
 https://www.youtube.com/watch?v=7CqJlxBYj-M&t=2189s
 
-## Local Setup
+## Setup
 
 First, clone the repo and cd into the project
 ```bash
@@ -11,7 +11,15 @@ git clone https://github.com/antoniosarosi/MERN-Exercise-Tracker.git
 cd MERN-Exercise-Tracker
 ```
 
-Then use the auto setup script:
+## Run on Docker containers
+
+```bash
+docker-compose up
+```
+
+## Run locally
+
+Use the auto setup script:
 ```bash
 bash setup.sh
 ```
@@ -33,17 +41,15 @@ npm i
 touch .env
 echo "REACT_APP_API_URL=http://localhost:5000" >> .env
 ```
-## Run Locally
-
-Install Nodejs and Mongodb if you are not using Atlas, then make sure Mongo
-is running:
-```bash
-systemctl start mongodb
-```
 Then, in the project directory:
 ```bash
 cd backend
 npm run dev
-cd ../frontend
+```
+On another terminal:
+```bash
+cd frontend
 npm start
 ```
+
+Backend will be on port 5000 and frontend on port 3000 (if not already in use)

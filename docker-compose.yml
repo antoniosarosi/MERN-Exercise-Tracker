@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    mongo:
+        image: mongo
+
+    express:
+        build: ./backend
+        environment:
+            MONGO_URI: mongodb://mongo/mern-exercise-tracker
+        volumes:
+            - ./backend:/usr/src/backend
+        ports:
+            - "5000:5000"
+        depends_on: 
+            - mongo
+
+    react:
+        build: ./frontend
+        environment:
+            REACT_APP_API_URL: http://localhost:5000
+        volumes:
+            - ./frontend:/usr/src/frontend
+        ports:
+            - "3000:3000"
+        depends_on: 
+            - express
+        stdin_open: true
