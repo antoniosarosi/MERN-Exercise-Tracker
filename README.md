@@ -11,17 +11,19 @@ git clone https://github.com/antoniosarosi/MERN-Exercise-Tracker.git
 cd MERN-Exercise-Tracker
 ```
 
-## Run on Docker containers
-
+### Docker setup
+Use the setup script:
+```bash
+bash docker-setup.sh
+```
+### Run on Docker containers
 ```bash
 docker-compose up
 ```
-
-## Run locally
-
+### Local setup
 Use the auto setup script:
 ```bash
-bash setup.sh
+bash local-setup.sh
 ```
 
 Or if you prefer to do it manually:
@@ -41,7 +43,8 @@ npm i
 touch .env
 echo "REACT_APP_API_URL=http://localhost:5000" >> .env
 ```
-Then, in the project directory:
+### Run locally
+In the project directory:
 ```bash
 cd backend
 npm run dev

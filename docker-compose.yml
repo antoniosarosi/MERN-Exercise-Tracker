@@ -3,26 +3,32 @@ version: '3'
 services:
     mongo:
         image: mongo
+        logging:
+            driver: none
 
     express:
-        build: ./backend
+        image: "node:current-alpine"
+        working_dir: /usr/src/app/backend
         environment:
             MONGO_URI: mongodb://mongo/mern-exercise-tracker
         volumes:
-            - ./backend:/usr/src/backend
+            - ./backend:/usr/src/app/backend
         ports:
             - "5000:5000"
+        command: "npm run dev"
         depends_on: 
             - mongo
 
     react:
-        build: ./frontend
+        image: "node:current-alpine"
+        working_dir: /usr/src/app/frontend
         environment:
             REACT_APP_API_URL: http://localhost:5000
         volumes:
-            - ./frontend:/usr/src/frontend
+            - ./frontend:/usr/src/app/frontend
         ports:
             - "3000:3000"
+        command: "npm start"
         depends_on: 
             - express
         stdin_open: true

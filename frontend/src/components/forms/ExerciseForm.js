@@ -3,15 +3,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Redirect } from 'react-router-dom';
-
-import Api from '../../api/api';
+// import { Redirect } from 'react-router-dom';
 
 export default class ExerciseForm extends Component {
   constructor(props) {
     super(props);
-
-    this.api = new Api();
 
     this.state = {
       username: '',
@@ -19,13 +15,11 @@ export default class ExerciseForm extends Component {
       reps: 0,
       date: new Date(),
       users: [],
-      redirect: false,
     };
   }
 
   componentDidMount() {
-    this.api
-      .getUsers()
+    this.props.api.getUsers()
       .then((res) => {
         const users = res.map((user) => user.username);
         this.setState({ users, username: users[0] });
@@ -34,8 +28,7 @@ export default class ExerciseForm extends Component {
 
     const id = this.props.match.params.id;
     if (id) {
-      this.api
-        .getExercise(id)
+      this.props.api.getExercise(id)
         .then((res) => {
           const { username, description, reps, date } = res;
           this.setState({
@@ -76,19 +69,14 @@ export default class ExerciseForm extends Component {
       exercise._id = id;
     }
 
-    this.props
-      .onSubmit(exercise)
+    this.props.onSubmit(exercise)
       .then((res) => {
-        this.setState({ redirect: true });
         this.props.showAlert(res);
       })
       .catch((e) => this.props.showAlert(e));
-  }
+ }
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect exact to="/" />;
-    }
     const title = this.props.title;
     return (
       <div>

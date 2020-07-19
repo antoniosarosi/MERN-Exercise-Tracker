@@ -33,7 +33,7 @@ class ExercisesList extends Component {
       .catch((e) => this.props.showAlert(e));
   }
 
-  deleteExercise(id) {
+  async deleteExercise(id) {
     this.props.api.deleteExercise(id)
       .then((res) => {
         this.props.showAlert(res);

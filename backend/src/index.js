@@ -26,6 +26,9 @@ mongoose.connection.once('open', () =>
 );
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('MERN Exercise Tracker');
+})
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 

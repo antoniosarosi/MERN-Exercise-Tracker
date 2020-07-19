@@ -1,37 +1,21 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import Navbar from './components/Navbar';
+import Alert from './components/Alert';
 import ExercisesList from './components/ExercisesList';
 import ExerciseForm from './components/forms/ExerciseForm';
 import UserForm from './components/forms/UserFrom';
-import Api from './api/api';
+import api from './api/api';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.api = new Api();
+    this.api = api;
     this.state = {
       showAlert: false,
-      alert: { success: false, message: '' },
+      alert: { success: false, message: 'alert' }
     };
-  }
-
-  alert() {
-    if (this.state.showAlert) {
-      const alert = this.state.alert;
-      return (
-        <Alert
-          variant={alert.success ? 'success' : 'danger'}
-          onClose={() => this.setState({ showAlert: false })}
-          dismissible
-        >
-          {alert.message}
-        </Alert>
-      );
-    }
   }
 
   showAlert(alert) {
@@ -41,34 +25,13 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar bg="dark" variant="dark" expand="lg">
-          <Link to="/" className="navbar-brand">
-            Excercise Tracker
-          </Link>
-          <Navbar.Toggle aria-controls="nav" />
-          <Navbar.Collapse id="nav">
-            <Nav className="mr-auto">
-              <Nav.Item>
-                <Link to="/" className="nav-link">
-                  Exercises
-                </Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Link to="/create" className="nav-link">
-                  Create Exercise
-                </Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Link to="/user" className="nav-link">
-                  Create User
-                </Link>
-              </Nav.Item>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-
+        <Navbar />
         <Container className="mt-4">
-          {this.alert()}
+          <Alert
+            alert={this.state.alert}
+            showAlert={this.state.showAlert}
+            onClose={() => this.setState({ showAlert: false })}
+          />
           <Switch>
             <Route
               path="/"
@@ -83,25 +46,31 @@ class App extends Component {
             />
             <Route
               path="/create"
-              component={(props) => (
-                <ExerciseForm
-                  {...props}
-                  title="Add Exercise"
-                  onSubmit={(exercise) => this.api.addExercise(exercise)}
-                  showAlert={(alert) => this.showAlert(alert)}
-                />
-              )}
+              component={(props) => {
+                return (
+                  <ExerciseForm
+                    {...props}
+                    api={this.api}
+                    title="Add Exercise"
+                    onSubmit={(exercise) => this.api.addExercise(exercise)}
+                    showAlert={(alert) => this.showAlert(alert)}
+                  />
+                );
+              }}
             />
             <Route
               path="/edit/:id"
-              component={(props) => (
-                <ExerciseForm
-                  {...props}
-                  title="Edit Exercise"
-                  onSubmit={(exercise) => this.api.editExercise(exercise)}
-                  showAlert={(alert) => this.showAlert(alert)}
-                />
-              )}
+              component={(props) => {
+                return (
+                  <ExerciseForm
+                    {...props}
+                    api={this.api}
+                    title="Edit Exercise"
+                    onSubmit={(exercise) => this.api.editExercise(exercise)}
+                    showAlert={(alert) => this.showAlert(alert)}
+                  />
+                );
+              }}
             />
             <Route
               path="/user"
